@@ -350,56 +350,6 @@
       backdrop-filter: blur(8px);
     }
 
-    /* Skeleton loading states */
-    .ba-loading {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      max-height: 640px;
-      border-radius: var(--radius-sm);
-      background: #e8e8ed;
-      overflow: hidden;
-    }
-
-    .skeleton {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, #e8e8ed 25%, #f5f5f7 50%, #e8e8ed 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      z-index: 5;
-    }
-
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    .tool-badge {
-      position: absolute;
-      bottom: 12px;
-      left: 12px;
-      background: rgba(29,29,31,0.85);
-      color: #fff;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.62rem;
-      padding: 4px 9px;
-      border-radius: 4px;
-      z-index: 10;
-      letter-spacing: 0.06em;
-    }
-
-    .ba-container.loaded {
-      display: block;
-    }
-
-    .ba-loading.hidden {
-      display: none;
-    }
-
     /* Footer */
     footer {
       text-align: center;
@@ -512,11 +462,7 @@
           <p class="project-desc">
             Sustitución de cielo y ajuste tonal para potenciar la atmósfera del momento dorado. Se preservó la naturalidad de piel y texturas.
           </p>
-          <div class="ba-loading">
-            <div class="skeleton"></div>
-            <div class="tool-badge">Editado con Photoshop & Lightroom</div>
-          </div>
-          <div class="ba-container" data-ba style="display:none;">
+          <div class="ba-container" data-ba>
             <img class="ba-after" src="images/01-after.webp" alt="Después" draggable="false" loading="lazy" width="2400" height="3600" decoding="async" />
             <img class="ba-before" src="images/01-before.webp" alt="Antes" draggable="false" loading="lazy" width="4024" height="6048" decoding="async" />
             <div class="ba-handle"></div>
@@ -538,11 +484,7 @@
           <p class="project-desc">
             Limpieza de set, sustitución de fondo y modelado de luz para un resultado editorial limpio y contemporáneo.
           </p>
-          <div class="ba-loading">
-            <div class="skeleton"></div>
-            <div class="tool-badge">Editado con Photoshop & Lightroom</div>
-          </div>
-          <div class="ba-container" data-ba style="display:none;">
+          <div class="ba-container" data-ba>
             <img class="ba-after" src="images/02-after.webp" alt="Después" draggable="false" loading="lazy" width="3600" height="2400" decoding="async" />
             <img class="ba-before" src="images/02-before.webp" alt="Antes" draggable="false" loading="lazy" width="6048" height="4024" decoding="async" />
             <div class="ba-handle"></div>
@@ -564,11 +506,7 @@
           <p class="project-desc">
             Integración en entorno arquitectónico. Trabajo de perspectiva, iluminación coherente y detalle en vestido y corona.
           </p>
-          <div class="ba-loading">
-            <div class="skeleton"></div>
-            <div class="tool-badge">Editado con Photoshop & Lightroom</div>
-          </div>
-          <div class="ba-container" data-ba style="display:none;">
+          <div class="ba-container" data-ba>
             <img class="ba-after" src="images/03-after.webp" alt="Después" draggable="false" loading="lazy" width="2400" height="3600" decoding="async" />
             <img class="ba-before" src="images/03-before.webp" alt="Antes" draggable="false" loading="lazy" width="2400" height="3600" decoding="async" />
             <div class="ba-handle"></div>
@@ -648,30 +586,6 @@
         if (e.target === handle) return;
         update(e.clientX);
       });
-    });
-
-    // Lazy loading with skeletons — mostrar ba-container cuando ambas imágenes cargan
-    document.querySelectorAll('.ba-loading').forEach(loadingEl => {
-      const container = loadingEl.nextElementSibling;
-      const afterImg = container.querySelector('.ba-after');
-      const beforeImg = container.querySelector('.ba-before');
-      let loaded = 0;
-
-      const checkLoaded = () => {
-        loaded++;
-        if (loaded >= 2) {
-          loadingEl.classList.add('hidden');
-          container.style.display = 'block';
-          container.classList.add('loaded');
-        }
-      };
-
-      afterImg.addEventListener('load', checkLoaded);
-      beforeImg.addEventListener('load', checkLoaded);
-
-      // Fallback si las imágenes ya están en caché
-      if (afterImg.complete) checkLoaded();
-      if (beforeImg.complete) checkLoaded();
     });
   </script>
 </body>
