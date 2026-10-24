@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Angel Ricardo Carvajal Díaz — Portfolio de Edición</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --bg-elevated: #ffffff;
+      --text: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-tertiary: #86868b;
+      --border: #d2d2d7;
+      --border-light: #e8e8ed;
+      --accent: #0071e3;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── PROFILE HERO ─── */
+    .profile-section {
+      padding: 4.5rem 1.5rem 3.5rem;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 1.75rem;
+      z-index: 10;
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 3px solid #fff;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.45s ease;
+      cursor: pointer;
+      display: block;
+    }
+
+    .avatar-wrap:hover .avatar {
+      transform: scale(1.85);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Bubble that appears on avatar hover — shake once */
+    .phone-call {
+      position: absolute;
+      left: -150px;
+      top: 50%;
+      transform: translateY(-50%) translateX(-8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-md);
+      border-radius: 999px;
+      padding: 0.7rem 1.2rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+      z-index: 20;
+    }
+
+    .avatar-wrap:hover .phone-call {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-50%) translateX(0);
+      animation: shake 0.6s ease-out forwards;
+    }
+
+    @keyframes shake {
+      0% { transform: translateY(-50%) translateX(-8px); }
+      25% { transform: translateY(-50%) translateX(4px); }
+      50% { transform: translateY(-50%) translateX(-4px); }
+      75% { transform: translateY(-50%) translateX(2px); }
+      100% { transform: translateY(-50%) translateX(0); }
+    }
+
+    /* Name with interactive words */
+    .name-line {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.55rem 0.85rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .name-word {
+      font-size: 1.65rem;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      cursor: default;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  color 0.25s ease;
+      display: inline-block;
+      padding: 0 2px;
+    }
+
+    .name-word:hover {
+      transform: scale(1.18);
+      color: var(--accent);
+      z-index: 5;
+    }
+
+    /* Detail that appears under the hovered word */
+    .name-detail {
+      height: 1.6rem;
+      margin-top: 0.6rem;
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      letter-spacing: -0.01em;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+      pointer-events: none;
+    }
+
+    .name-detail.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .role {
+      margin-top: 1.1rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 1.75rem;
+      text-align: center;
+    }
+
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    /* Project card – technical minimal */
+    .project {
+      background: var(--bg-elevated);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .project:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border);
+    }
+
+    .project-meta {
+      padding: 1.35rem 1.6rem 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .project-meta h2 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .project-meta .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+      background: var(--bg);
+      padding: 0.28rem 0.55rem;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+
+    .project-body {
+      padding: 1.25rem 1.6rem 1.6rem;
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-bottom: 1.25rem;
+      max-width: 520px;
+      line-height: 1.55;
+    }
+
+    /* Before / After slider */
+    .ba-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      max-height: 640px;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      background: #e8e8ed;
+      user-select: none;
+      cursor: ew-resize;
+    }
+
+    .ba-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      display: block;
+    }
+
+    .ba-after {
+      z-index: 1;
+    }
+
+    .ba-before {
+      z-index: 2;
+      clip-path: inset(0 50% 0 0);
+    }
+
+    .ba-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: #fff;
+      z-index: 10;
+      transform: translateX(-50%);
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .ba-handle::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .ba-handle::after {
+      content: '↔';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 13px;
+      color: #1d1d1f;
+      font-weight: 500;
+      z-index: 1;
+    }
+
+    .ba-labels {
+      position: absolute;
+      top: 12px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 14px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .ba-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.92);
+      color: #1d1d1f;
+      padding: 4px 9px;
+      border-radius: 4px;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem 3.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+    }
+
+    footer .mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      margin-top: 0.4rem;
+    }
+
+    .contact {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    .contact-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      transition: color 0.2s ease;
+    }
+
+    .contact-link:hover {
+      color: var(--accent);
+    }
+
+    .contact-sep {
+      color: var(--border-light);
+      margin: 0 0.35rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .profile-section {
+        padding: 3.2rem 1.25rem 2.5rem;
+      }
+
+      .name-word {
+        font-size: 1.35rem;
+      }
+
+      .avatar {
+        width: 84px;
+        height: 84px;
+      }
+
+      .avatar-wrap:hover .avatar {
+        transform: scale(1.65);
+      }
+
+      .project-meta {
+        padding: 1.15rem 1.25rem 0.95rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+      }
+
+      .project-body {
+        padding: 1.1rem 1.25rem 1.35rem;
+      }
+
+      .projects {
+        gap: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROFILE -->
+  <section class="profile-section">
+<div class="avatar-wrap">
+      <div class="phone-call"><span class="call-tip">Disponible ahora.</span></div>
+      <img class="avatar" src="images/profile.jpg" alt="Angel Ricardo Carvajal Díaz" />
+</div>
+
+    <div class="name-line" id="nameLine">
+      <span class="name-word" data-detail="Amplia experiencia en retoque fotográfico (más de 3 años)">Angel</span>
+      <span class="name-word" data-detail="Recursos y adaptabilidad">Ricardo</span>
+      <span class="name-word" data-detail="Compromiso con la calidad">Carvajal</span>
+      <span class="name-word" data-detail="Diseño, composición y retoque">Díaz</span>
+    </div>
+
+    <div class="name-detail" id="nameDetail"></div>
+
+    <div class="role">Editor fotográfico · Retoque & Color</div>
+  </section>
+
+  <main>
+    <div class="section-label">Selected Work — Before / After</div>
+
+    <div class="projects">
+
+      <!-- Project 1 -->
+      <article class="project">
+        <div class="project-meta">
+          <h2>Retrato al atardecer</h2>
+          <span class="tag">Color · Sky</span>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            Sustitución de cielo y ajuste tonal para potenciar la atmósfera del momento dorado. Se preservó la naturalidad de piel y texturas.
+          </p>
+          <div class="ba-container" data-ba>
+            <img class="ba-after" src="images/01-after.jpg" alt="Después" draggable="false" />
+            <img class="ba-before" src="images/01-before.jpg" alt="Antes" draggable="false" />
+            <div class="ba-handle"></div>
+            <div class="ba-labels">
+              <span class="ba-label">Antes</span>
+              <span class="ba-label">Después</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project">
+        <div class="project-meta">
+          <h2>Estudio editorial</h2>
+          <span class="tag">Background · Light</span>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            Limpieza de set, sustitución de fondo y modelado de luz para un resultado editorial limpio y contemporáneo.
+          </p>
+          <div class="ba-container" data-ba>
+            <img class="ba-after" src="images/02-after.jpg" alt="Después" draggable="false" />
+            <img class="ba-before" src="images/02-before.jpg" alt="Antes" draggable="false" />
+            <div class="ba-handle"></div>
+            <div class="ba-labels">
+              <span class="ba-label">Antes</span>
+              <span class="ba-label">Después</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project">
+        <div class="project-meta">
+          <h2>Quinceañera — Composición</h2>
+          <span class="tag">Composite</span>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">
+            Integración en entorno arquitectónico. Trabajo de perspectiva, iluminación coherente y detalle en vestido y corona.
+          </p>
+          <div class="ba-container" data-ba>
+            <img class="ba-after" src="images/03-after.jpg" alt="Después" draggable="false" />
+            <img class="ba-before" src="images/03-before.jpg" alt="Antes" draggable="false" />
+            <div class="ba-handle"></div>
+            <div class="ba-labels">
+              <span class="ba-label">Antes</span>
+              <span class="ba-label">Después</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>Angel Ricardo Carvajal Díaz</p>
+    <p class="mono">Portfolio de edición fotográfica</p>
+    <div class="contact">
+      <a href="mailto:angelrcdma@icloud.com" class="contact-link">angelrcdma@icloud.com</a>
+      <span class="contact-sep">·</span>
+      <a href="tel:+5356440843" class="contact-link">+53 564 408 43</a>
+    </div>
+  </footer>
+
+  <script>
+    // Name hover → show corresponding detail
+    const detailEl = document.getElementById('nameDetail');
+    const words = document.querySelectorAll('.name-word');
+
+    words.forEach(word => {
+      word.addEventListener('mouseenter', () => {
+        detailEl.textContent = word.dataset.detail;
+        detailEl.classList.add('visible');
+      });
+      word.addEventListener('mouseleave', () => {
+        detailEl.classList.remove('visible');
+      });
+    });
+
+    // Before / After sliders
+    document.querySelectorAll('[data-ba]').forEach(container => {
+      const before = container.querySelector('.ba-before');
+      const handle = container.querySelector('.ba-handle');
+      let isDragging = false;
+
+      const update = (x) => {
+        const rect = container.getBoundingClientRect();
+        let percent = ((x - rect.left) / rect.width) * 100;
+        percent = Math.max(5, Math.min(95, percent));
+        before.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+        handle.style.left = `${percent}%`;
+      };
+
+      const start = (e) => {
+        isDragging = true;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        update(clientX);
+      };
+
+      const move = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        update(clientX);
+      };
+
+      const end = () => { isDragging = false; };
+
+      container.addEventListener('mousedown', start);
+      container.addEventListener('touchstart', start, { passive: true });
+      window.addEventListener('mousemove', move);
+      window.addEventListener('touchmove', move, { passive: false });
+      window.addEventListener('mouseup', end);
+      window.addEventListener('touchend', end);
+
+      container.addEventListener('click', (e) => {
+        if (e.target === handle) return;
+        update(e.clientX);
+      });
+    });
+  </script>
+</body>
+</html>
