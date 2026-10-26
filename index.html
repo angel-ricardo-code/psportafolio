@@ -169,6 +169,13 @@
       color: var(--text);
     }
 
+    .nav-icon {
+      display: none;
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
     /* Hero Section */
     header {
       min-height: 90vh;
@@ -335,8 +342,8 @@
 
     .projects-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 4rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
     }
 
     /* Project Card */
@@ -353,53 +360,53 @@
     }
 
     .project-info {
-      padding: 2.5rem 2.5rem 1.5rem;
+      padding: 1.5rem 1.5rem 1.25rem;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: flex-start;
+      gap: 0.85rem;
+      min-height: 11.5rem;
+    }
+
+    .project-info .project-tag {
+      order: -1;
     }
 
     .project-meta-left h3 {
       font-family: 'Syne', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       letter-spacing: -0.01em;
     }
 
     .project-meta-left p {
       color: var(--text-secondary);
-      font-size: 0.95rem;
-      max-width: 600px;
+      font-size: 0.82rem;
       font-weight: 300;
+      line-height: 1.5;
     }
 
     .project-tag {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
+      font-size: 0.62rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      padding: 0.4rem 0.8rem;
+      padding: 0.3rem 0.65rem;
       border-radius: 99px;
       color: var(--text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
     }
 
     /* Before / After Container & Toggle */
     .ba-container {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 4 / 5;
       background: #000;
       overflow: hidden;
       user-select: none;
-    }
-
-    @media (max-width: 768px) {
-      .ba-container {
-        aspect-ratio: 4 / 5;
-      }
     }
 
     .ba-container img {
@@ -424,31 +431,6 @@
 
     .ba-container.revealed .ba-before {
       clip-path: inset(0 100% 0 0);
-    }
-
-    .ba-labels {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 1.5rem;
-      right: 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    .ba-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
     }
 
     /* Toggle Button */
@@ -520,40 +502,61 @@
       opacity: 1;
     }
 
-    .stepper-nav {
+    .stepbar {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
+      align-items: center;
+      justify-content: center;
       padding: 1.5rem 2rem;
       background: var(--bg-card);
       border-top: 1px solid var(--border);
-      align-items: center;
-      justify-content: center;
+      border-bottom: 1px solid var(--border);
     }
 
-    .step-btn {
-      background: var(--bg-surface);
+    .step-item {
+      position: relative;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      background: none;
       border: 1px solid var(--border);
-      color: var(--text-secondary);
+      color: var(--text-tertiary);
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem;
-      padding: 0.6rem 1.2rem;
-      border-radius: 99px;
+      font-weight: 500;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
     }
 
-    .step-btn:hover {
+    .step-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: 1.8rem;
+      height: 1px;
+      background: var(--border);
+      transform: translateY(-50%);
+      z-index: 1;
+      transition: background 0.3s ease;
+    }
+
+    .step-item:hover {
       border-color: var(--border-hover);
-      color: var(--text);
+      color: var(--text-secondary);
     }
 
-    .step-btn.active {
+    .step-item.active {
       background: #fff;
       color: #000;
       border-color: #fff;
-      font-weight: 500;
-      box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+    }
+
+    .step-item.active::after {
+      background: rgba(255, 255, 255, 0.4);
     }
 
     /* Footer */
@@ -606,6 +609,16 @@
     }
 
     @media (max-width: 768px) {
+      * {
+        cursor: auto;
+      }
+      .cursor,
+      .cursor-follower {
+        display: none;
+      }
+      html {
+        font-size: 14px;
+      }
       .project-info {
         flex-direction: column;
         gap: 1.5rem;
@@ -617,7 +630,42 @@
       }
       .nav-island {
         bottom: 1.5rem;
-        padding: 0.5rem 1rem;
+        padding: 0.7rem 1.4rem;
+        gap: 1.8rem;
+      }
+      .nav-links {
+        gap: 1.6rem;
+      }
+      .nav-label { display: none; }
+      .nav-icon {
+        display: block;
+        color: var(--text-secondary);
+      }
+      .nav-links a:hover .nav-icon {
+        color: var(--text);
+      }
+    }
+      .avatar-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .social-accordion {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) scaleY(0);
+        transform-origin: top;
+        width: auto;
+        max-width: 90vw;
+        white-space: normal;
+        text-align: center;
+      }
+      .avatar-container:hover .social-accordion {
+        transform: translateX(-50%) scaleY(1);
+        opacity: 1;
+        visibility: visible;
       }
     }
   </style>
@@ -635,8 +683,18 @@
       <span>DISPONIBLE PARA PROYECTOS</span>
     </div>
     <ul class="nav-links">
-      <li><a href="#work" class="interactive">Trabajos</a></li>
-      <li><a href="mailto:angelrcdma@icloud.com" class="interactive">Contacto</a></li>
+      <li>
+        <a href="#work" class="interactive">
+          <span class="nav-label">Trabajos</span>
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-label="Photos"><rect width="20" height="14" x="2" y="3" fill="none" stroke="currentColor" stroke-width="2" rx="2"/><circle cx="12" cy="9" r="3" fill="currentColor"/></svg>
+        </a>
+      </li>
+      <li>
+        <a href="mailto:angelrcdma@icloud.com" class="interactive">
+          <span class="nav-label">Contacto</span>
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-label="Email"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 0v8.5l6-4 6 4V4z" fill="currentColor"/></svg>
+        </a>
+      </li>
     </ul>
   </nav>
 
@@ -646,7 +704,11 @@
 
     <div class="avatar-container interactive">
       <div class="avatar-showcase">
-        <img src="images/profile.avif" alt="Angel Ricardo Carvajal Díaz" width="1244" height="1660" />
+        <picture>
+  <source srcset="images/profile.avif" type="image/avif">
+  <source srcset="images/profile.webp" type="image/webp">
+  <img src="images/profile.webp" alt="Angel Ricardo Carvajal Díaz" width="1244" height="1660" />
+</picture>
       </div>
       <div class="social-accordion">
         <a href="https://wa.me/5356440843" target="_blank" class="social-link interactive">
@@ -687,25 +749,43 @@
           <div class="project-info">
             <div class="project-meta-left">
               <h3>Mi flujo de trabajo</h3>
-              <p id="stepDesc">Edición constructiva multicapa desde la captura RAW original hasta el resultado final.</p>
             </div>
-            <span class="project-tag" id="stepTag">Paso 1 / 5</span>
           </div>
 
           <div class="stepper-screen" id="stepperScreen">
-            <img src="images/edition/2003-original.avif" alt="Original" class="stepper-img active" data-step="0" data-desc="Archivo RAW original sin procesar, con balance de luz inicial." data-title="01 · Original" />
-            <img src="images/edition/2003-1(piel).avif" alt="Piel y Textura" class="stepper-img" data-step="1" data-desc="Corrección de imperfecciones, suavizado de piel preservando textura natural (Frequency Separation)." data-title="02 · Piel & Textura" />
-            <img src="images/edition/2003-2(luz).avif" alt="Luz y Volumen" class="stepper-img" data-step="2" data-desc="Modelado de luz mediante técnicas de Dodge & Burn y realce de volúmenes tridimensionales." data-title="03 · Luz & Volumen" />
-            <img src="images/edition/2003-3(color).avif" alt="Color Grading" class="stepper-img" data-step="3" data-desc="Gradación de color y calibración tonal para dar atmósfera y consistencia cinematográfica." data-title="04 · Color Grading" />
-            <img src="images/edition/2003-final.avif" alt="Resultado Final" class="stepper-img" data-step="4" data-desc="Acabado final con nitidez selectiva, ajustes de contraste global y exportación master." data-title="05 · Resultado Final" />
+            <picture>
+  <source srcset="images/edition/2003-original.avif" type="image/avif">
+  <source srcset="images/edition/2003-original.webp" type="image/webp">
+  <img src="images/edition/2003-original.webp" alt="Original" class="stepper-img active" data-step="0" data-desc="Archivo RAW original sin procesar, con balance de luz inicial." data-title="01 · Original" />
+</picture>
+            <picture>
+  <source srcset="images/edition/2003-1(piel).avif" type="image/avif">
+  <source srcset="images/edition/2003-1(piel).webp" type="image/webp">
+  <img src="images/edition/2003-1(piel).webp" alt="Piel y Textura" class="stepper-img" data-step="1" data-desc="Corrección de imperfecciones, suavizado de piel preservando textura natural (Frequency Separation)." data-title="02 · Piel & Textura" />
+</picture>
+            <picture>
+  <source srcset="images/edition/2003-2(luz).avif" type="image/avif">
+  <source srcset="images/edition/2003-2(luz).webp" type="image/webp">
+  <img src="images/edition/2003-2(luz).webp" alt="Luz y Volumen" class="stepper-img" data-step="2" data-desc="Modelado de luz mediante técnicas de Dodge & Burn y realce de volúmenes tridimensionales." data-title="03 · Luz & Volumen" />
+</picture>
+            <picture>
+  <source srcset="images/edition/2003-3(color).avif" type="image/avif">
+  <source srcset="images/edition/2003-3(color).webp" type="image/webp">
+  <img src="images/edition/2003-3(color).webp" alt="Color Grading" class="stepper-img" data-step="3" data-desc="Gradación de color y calibración tonal para dar atmósfera y consistencia cinematográfica." data-title="04 · Color Grading" />
+</picture>
+            <picture>
+  <source srcset="images/edition/2003-final.avif" type="image/avif">
+  <source srcset="images/edition/2003-final.webp" type="image/webp">
+  <img src="images/edition/2003-final.webp" alt="Resultado Final" class="stepper-img" data-step="4" data-desc="Acabado final con nitidez selectiva, ajustes de contraste global y exportación master." data-title="05 · Resultado Final" />
+</picture>
           </div>
 
-          <div class="stepper-nav" id="stepperNav">
-            <button class="step-btn interactive active" data-index="0">01. Original</button>
-            <button class="step-btn interactive" data-index="1">02. Piel</button>
-            <button class="step-btn interactive" data-index="2">03. Luz</button>
-            <button class="step-btn interactive" data-index="3">04. Color</button>
-            <button class="step-btn interactive" data-index="4">05. Final</button>
+          <div class="stepbar" id="stepBar">
+            <button class="step-item interactive active" data-index="0">01</button>
+            <button class="step-item interactive" data-index="1">02</button>
+            <button class="step-item interactive" data-index="2">03</button>
+            <button class="step-item interactive" data-index="3">04</button>
+            <button class="step-item interactive" data-index="4">05</button>
           </div>
         </article>
       </div>
@@ -732,8 +812,16 @@
           <span class="project-tag">Color · Sky Grade</span>
         </div>
         <div class="ba-container" data-ba>
-          <img class="ba-after" src="images/01-after.avif" alt="Después" loading="lazy" />
-          <img class="ba-before" src="images/01-before.avif" alt="Antes" loading="lazy" />
+          <picture>
+  <source srcset="images/01-after.avif" type="image/avif">
+  <source srcset="images/01-after.webp" type="image/webp">
+  <img class="ba-after" src="images/01-after.webp" alt="Después" loading="lazy" />
+</picture>
+          <picture>
+  <source srcset="images/01-before.avif" type="image/avif">
+  <source srcset="images/01-before.webp" type="image/webp">
+  <img class="ba-before" src="images/01-before.webp" alt="Antes" loading="lazy" />
+</picture>
           <button class="ba-toggle-btn interactive" data-toggle>Ver Después</button>
         </div>
       </article>
@@ -748,8 +836,16 @@
           <span class="project-tag">Background · Retouch</span>
         </div>
         <div class="ba-container" data-ba>
-          <img class="ba-after" src="images/02-after.avif" alt="Después" loading="lazy" />
-          <img class="ba-before" src="images/02-before.avif" alt="Antes" loading="lazy" />
+          <picture>
+  <source srcset="images/02-after.avif" type="image/avif">
+  <source srcset="images/02-after.webp" type="image/webp">
+  <img class="ba-after" src="images/02-after.webp" alt="Después" loading="lazy" />
+</picture>
+          <picture>
+  <source srcset="images/02-before.avif" type="image/avif">
+  <source srcset="images/02-before.webp" type="image/webp">
+  <img class="ba-before" src="images/02-before.webp" alt="Antes" loading="lazy" />
+</picture>
           <button class="ba-toggle-btn interactive" data-toggle>Ver Después</button>
         </div>
       </article>
@@ -764,8 +860,16 @@
           <span class="project-tag">Composite</span>
         </div>
         <div class="ba-container" data-ba>
-          <img class="ba-after" src="images/03-after.avif" alt="Después" loading="lazy" />
-          <img class="ba-before" src="images/03-before.avif" alt="Antes" loading="lazy" />
+          <picture>
+  <source srcset="images/03-after.avif" type="image/avif">
+  <source srcset="images/03-after.webp" type="image/webp">
+  <img class="ba-after" src="images/03-after.webp" alt="Después" loading="lazy" />
+</picture>
+          <picture>
+  <source srcset="images/03-before.avif" type="image/avif">
+  <source srcset="images/03-before.webp" type="image/webp">
+  <img class="ba-before" src="images/03-before.webp" alt="Antes" loading="lazy" />
+</picture>
           <button class="ba-toggle-btn interactive" data-toggle>Ver Después</button>
         </div>
       </article>
@@ -816,9 +920,7 @@
 
     // Stepper Interactive Case Study logic
     const stepImgs = document.querySelectorAll('.stepper-img');
-    const stepBtns = document.querySelectorAll('.step-btn');
-    const stepDesc = document.getElementById('stepDesc');
-    const stepTag = document.getElementById('stepTag');
+    const stepBtns = document.querySelectorAll('.step-item');
 
     stepBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -828,12 +930,10 @@
         stepBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // Update active images & texts
+        // Update active images
         stepImgs.forEach(img => {
           if (img.getAttribute('data-step') === index) {
             img.classList.add('active');
-            stepDesc.textContent = img.getAttribute('data-desc');
-            stepTag.textContent = `Paso ${parseInt(index) + 1} / 5`;
           } else {
             img.classList.remove('active');
           }
